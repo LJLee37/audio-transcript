@@ -41,7 +41,7 @@ export default defineRouter(function (/* { store, ssrContext } */) {
 
     // 인증이 필요한 페이지에 접근할 때 토큰이 없으면 로그인 페이지로 리다이렉트
     if (requiresAuth && !token) {
-      next('/login')
+      next('/auth/login')
     }
     // 이미 로그인한 상태에서 게스트 페이지(로그인, 회원가입)에 접근하면 메인 페이지로 리다이렉트
     else if (isGuestRoute && token) {

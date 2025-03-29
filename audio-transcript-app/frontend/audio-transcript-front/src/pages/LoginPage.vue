@@ -39,7 +39,7 @@
         <div class="text-center q-mt-sm">
           <p>
             {{ $t('auth.noAccount') }}
-            <router-link to="/register">{{ $t('auth.register') }}</router-link>
+            <router-link to="/auth/register">{{ $t('auth.register') }}</router-link>
           </p>
         </div>
       </q-form>

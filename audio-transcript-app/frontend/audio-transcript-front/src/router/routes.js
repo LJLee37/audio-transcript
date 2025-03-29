@@ -8,14 +8,20 @@ const routes = [
 
   // 인증 관련 라우트
   {
-    path: '/login',
-    component: () => import('pages/LoginPage.vue'),
-    meta: { guest: true },
-  },
-  {
-    path: '/register',
-    component: () => import('pages/RegisterPage.vue'),
-    meta: { guest: true },
+    path: '/auth',
+    component: () => import('layouts/AuthLayout.vue'),
+    children: [
+      {
+        path: 'login',
+        component: () => import('pages/LoginPage.vue'),
+        meta: { guest: true },
+      },
+      {
+        path: 'register',
+        component: () => import('pages/RegisterPage.vue'),
+        meta: { guest: true },
+      },
+    ],
   },
 
   // Always leave this as last one,

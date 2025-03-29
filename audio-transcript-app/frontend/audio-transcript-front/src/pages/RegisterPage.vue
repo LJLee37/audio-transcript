@@ -56,7 +56,7 @@
         <div class="text-center q-mt-sm">
           <p>
             {{ $t('auth.hasAccount') }}
-            <router-link to="/login">{{ $t('auth.login') }}</router-link>
+            <router-link to="/auth/login">{{ $t('auth.login') }}</router-link>
           </p>
         </div>
       </q-form>
