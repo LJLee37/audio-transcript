@@ -51,44 +51,28 @@ app.get("/", (req, res) => {
 // 서버 시작
 const PORT = process.env.PORT || 5759;
 
-// HTTPS 설정
-if (process.env.NODE_ENV === "production") {
-  try {
-    const privateKey = fs.readFileSync(
-      "/etc/letsencrypt/live/server.ljlee37.com/privkey.pem",
-      "utf8"
-    );
-    const certificate = fs.readFileSync(
-      "/etc/letsencrypt/live/server.ljlee37.com/cert.pem",
-      "utf8"
-    );
-    const ca = fs.readFileSync(
-      "/etc/letsencrypt/live/server.ljlee37.com/chain.pem",
-      "utf8"
-    );
+// HTTPS 설정 - 개발 및 프로덕션 모드 모두 HTTPS 사용
+try {
+  const homeDir = process.env.HOME || process.env.USERPROFILE;
+  const privateKey = fs.readFileSync(homeDir + "/certs/privkey.pem", "utf8");
+  const certificate = fs.readFileSync(homeDir + "/certs/cert.pem", "utf8");
+  const ca = fs.readFileSync(homeDir + "/certs/chain.pem", "utf8");
 
-    const credentials = {
-      key: privateKey,
-      cert: certificate,
-      ca: ca,
-    };
+  const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca,
+  };
 
-    const httpsServer = https.createServer(credentials, app);
+  const httpsServer = https.createServer(credentials, app);
 
-    httpsServer.listen(PORT, () => {
-      console.log(`HTTPS Server running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error("Error loading SSL certificates:", error);
-    console.log("Starting server without HTTPS...");
-    app.listen(PORT, () => {
-      console.log(`HTTP Server running on port ${PORT}`);
-    });
-  }
-} else {
+  httpsServer.listen(PORT, () => {
+    console.log(`HTTPS Server running on port ${PORT}`);
+  });
+} catch (error) {
+  console.error("Error loading SSL certificates:", error);
+  console.log("Starting server without HTTPS...");
   app.listen(PORT, () => {
     console.log(`HTTP Server running on port ${PORT}`);
   });
 }
-
-module.exports = app;
