@@ -159,12 +159,11 @@
                 </div>
                 <q-btn
                   v-if="scope.canAddFiles"
-                  type="a"
                   icon="add_box"
                   round
                   dense
                   flat
-                  @click="scope.pickFiles"
+                  @click.stop.prevent="scope.pickFiles"
                 />
               </div>
             </template>
